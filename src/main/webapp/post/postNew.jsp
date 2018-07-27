@@ -46,7 +46,7 @@
 						<div class="blog-post">
 							<form id="frm" action="/postNew" class="form-horizontal"
 								 method="get" enctype="multipart/form-data">
-								<h2 class="blog-post-title">새글을 쓰겠다구요~~?</h2>
+								<h2 class="blog-post-title">새글을  쓰겠다구요~~?</h2>
 								<hr>
 								<input type="hidden" class="form-control" id="board_code" name="post_code" value="${param.post_code}" > 
 								<input type="hidden" class="form-control" id="post_parent" name="post_parent" value="${param.post_parent}" > 
