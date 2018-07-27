@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="post">
+	<select id="getPostPageList" parameterType="map" resultType="postVo">
+		SELECT *
+		FROM
+		(select a.*, ROWNUM rn
+		FROM
+		(select POST_CODE,lpad('->',(level-1)*2,'-')||POST_NAME as
+		POST_NAME,board_code,std_id,post_content,post_dt,post_parent,post_gcode
+		from post
+		where post.BOARD_CODE = #{board_code}
+		start with POST_PARENT is null
+		connect by PRIOR POST_CODE=POST_PARENT
+		order siblings by POST_GCODE) a)
+		WHERE rn BETWEEN (#{page}-1)*#{pageSize}+1 AND
+		#{page}*#{pageSize}
+	</select>
+
+	<select id="getPostTotCnt" resultType="int">
+		SELECT
+		COUNT (*)
+		FROM post
+	</select>
+ 	<select id="getPost" resultType="postVo">
+		SELECT *
+		FROM post
+		WHERE post_code=#{post_code}
+	</select> 
+	<update id="postUpdate" parameterType="postVo">
+		UPDATE post SET
+		post_name=#{post_name},post_content=#{post_content}
+		WHERE
+		post_code=#{post_code}
+	</update>
+
+	<select id="postSelect" parameterType="postVo" resultType="postVo">
+		SELECT *
+		FROM post
+		WHERE board_code=#{board_code}
+	</select>
+	
+	<insert id="postNew" parameterType="postVo">
+		<!-- INSERT BOARD INTO board_code=#{board_code}, board_name=#{board_name}, 
+			board_use=#{board_use} -->
+		INSERT INTO post
+		(post_parent,board_code,post_code,post_name,post_content,post_dt) values (parent_no.nextval,#{board_code},post_no.nextval,#{post_name},#{post_content},sysdate)
+	</insert>
+	
+		<insert id="postRp" parameterType="postVo">
+		INSERT INTO post
+		(board_code,post_code,post_parent,post_name,post_content,post_dt) values (#{board_code},post_no.nextval,#{post_parent},#{post_name},#{post_content},sysdate)
+	</insert>
+	<delete id="postDelete" parameterType="int">
+	  delete from post where post_code=#{post_code}
+	</delete>
+</mapper>     

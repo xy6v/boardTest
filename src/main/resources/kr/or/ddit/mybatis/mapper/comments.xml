@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comments">
+   <select id="getComments"  parameterType="int" resultType="commentsvo">
+      select * from comments where post_code=#{post_code} order by comments_dt desc 
+   </select>
+ 	<select id="getCommentsOne" parameterType="int" resultType="commentsVo">
+		SELECT *
+		FROM comments
+		WHERE comments_code=#{comments_code}
+	</select> 
+ 
+   <update id="updateComments" parameterType="commentsVo">
+      UPDATE comments SET
+      comments_content=#{comments_content}
+      WHERE
+      comments_code=#{comments_code}
+   </update>
+
+   <insert id="insertComments" parameterType="commentsVo">
+      <!-- INSERT BOARD INTO board_code=#{board_code}, board_name=#{board_name}, 
+         board_use=#{board_use} -->
+      INSERT INTO comments
+      (post_parent,post_code,comments_code,comments_dt,comments_content) values (parent_no.nextval,#{post_code},comments_no.nextval,sysdate,#{comments_content})
+   </insert>
+   
+   <delete id="deleteComments" parameterType="int">
+     delete from comments where comments_code=#{comments_code}
+   </delete>
+</mapper>     
