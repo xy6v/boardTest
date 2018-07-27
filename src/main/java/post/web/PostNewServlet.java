@@ -35,7 +35,7 @@ public class PostNewServlet extends HttpServlet {
 		String name = request.getParameter("post_name");
 		String content = request.getParameter("post_content");
 		
-		System.out.println("이런시발2:"+post_parent);
+		System.out.println("이런시발2좆됫구요:"+post_parent);
 		System.out.println("이런시발:"+post_code);
 	/*	String std_id= request.getParameter("std_id");
 		*/
