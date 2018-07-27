@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import junit.framework.Protectable;
 import student.model.StudentVo;
 import student.service.StudentService;
 import student.service.StudentServiceInf;
