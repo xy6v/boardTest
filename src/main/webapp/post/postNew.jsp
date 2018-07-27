@@ -51,7 +51,7 @@
 								<input type="hidden" class="form-control" id="board_code" name="post_code" value="${param.post_code}" > 
 								<input type="hidden" class="form-control" id="post_parent" name="post_parent" value="${param.post_parent}" > 
 								<input type="hidden" class="form-control" id="board_code" name="board_code" value="${param.board_code}" > 
-								글쓴이<label class="control-label">${studentVo.std_id}</label> <br>
+								글쓴이 <label class="control-label">${studentVo.std_id}</label> <br>
 								제목 <input type="text" name="post_name"/><br>
 								내용 <input type="text" name="post_content"/><br>
 								<input type="submit" value="생성"> <br>
