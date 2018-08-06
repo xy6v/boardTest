@@ -3,7 +3,7 @@ package post.model;
 import java.util.Date;
 
 public class PostVo {
-
+	private String post_use;
 	private int post_code;
 	private int board_code;
 	private String std_id;
@@ -12,6 +12,13 @@ public class PostVo {
 	private String post_name;
 	private String post_content;
 	private Date post_dt;
+	
+	public String getPost_use() {
+		return post_use;
+	}
+	public void setPost_use(String post_use) {
+		this.post_use = post_use;
+	}
 	public int getPost_code() {
 		return post_code;
 	}
@@ -62,11 +69,11 @@ public class PostVo {
 	}
 	@Override
 	public String toString() {
-		return "PostVo [post_cose=" + post_code + ", board_code=" + board_code
-				+ ", std_id=" + std_id + ", post_parent=" + post_parent
-				+ ", post_gcode=" + post_gcode + ", post_name=" + post_name
-				+ ", post_content=" + post_content + ", post_dt=" + post_dt
-				+ "]";
+		return "PostVo [post_use=" + post_use + ", post_code=" + post_code
+				+ ", board_code=" + board_code + ", std_id=" + std_id
+				+ ", post_parent=" + post_parent + ", post_gcode=" + post_gcode
+				+ ", post_name=" + post_name + ", post_content=" + post_content
+				+ ", post_dt=" + post_dt + "]";
 	}
 	
 }

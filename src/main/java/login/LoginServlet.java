@@ -74,8 +74,7 @@ public class LoginServlet extends HttpServlet {
 			System.out.println("Forward를 이용하여 main.jsp로 이동");
 
 			// foward.jsp로 위임
-			request
-					.getRequestDispatcher("/board/main.jsp").forward(request, response);
+			request.getRequestDispatcher("/board/main.jsp").forward(request, response);
 			System.out.println("로그인  성공!!!");
 			pw.write("로그인  성공!!!!!");
 			

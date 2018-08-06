@@ -15,6 +15,9 @@ import comments.service.CommentsServiceInf;
 import post.model.PostVo;
 import post.service.PostService;
 import post.service.PostServiceInf;
+import upload.model.UploadVo;
+import upload.service.UploadService;
+import upload.service.UploadServiceInf;
 
 
 /**
@@ -26,13 +29,16 @@ public class PostDetailServlet extends HttpServlet {
        
    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
 		int post_code = Integer.parseInt(request.getParameter("post_code"));
 		PostServiceInf postService = new PostService();
 		CommentsServiceInf commentsService = new CommentsService();
 		
 		List<CommentsVo> commentsList = commentsService.getComments(post_code);
 		PostVo postVo = postService.getPost(post_code);
-		
+		UploadServiceInf uploadService = new UploadService();
+		List<UploadVo> uploadList = uploadService.getUploadPost(post_code);
+		request.setAttribute("uploadList", uploadList);
 		request.setAttribute("commentsList", commentsList);
 		request.setAttribute("postVo", postVo);
 		

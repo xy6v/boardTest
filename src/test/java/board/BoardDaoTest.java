@@ -22,7 +22,7 @@ public class BoardDaoTest {
 			System.out.println(vo.getBoard_code() + "\t" + vo.getBoard_name() + "\t" +vo.getBoard_use());
 
 		/*** Then ***/
-		assertEquals(6, boardList.size());
+		assertEquals(19, boardList.size());
 
 	}
 	@Before

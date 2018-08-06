@@ -104,7 +104,7 @@ public class PostDao implements PostDaoInf {
 	@Override
 	public int postDelete(int post_code) {
 		SqlSession session=sqlMapSessionFactory.openSession();
-		int deleteCnt =session.delete("post.postDelete",post_code);
+		int deleteCnt =session.update("post.postDelete",post_code);
 		session.commit();
 		session.close();
 		return deleteCnt;

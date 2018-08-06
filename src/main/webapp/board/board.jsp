@@ -52,10 +52,10 @@
 								<h2 class="blog-post-title">게시판을 수정할 건가요!?</h2>
 								<hr>
 								자유게시판 생성 <input type="text" name="board_name"/>
-								<select name="board_use" >
+								<select  id ="board_use" name="board_use" >
 											<option value="Y">Y</option>
 											<option value="N">N</option>
-										</select>
+								</select>
 								<input type="submit" value="생성"> <br>
 								</form>
 								<hr>
@@ -68,10 +68,19 @@
 									게시판 이름:<input type="text" id="board_name" name="board_name" value="${vo.board_name}"/>
 									 <input type="hidden" class="form-control" id="board_name" name="board_name"
 										value="${vo.board_name}"> 
-										<select name="board_use">
+										
+										
+										<select id ="board_use"  name="board_use" >
+										<option value="${boardVo.board_use}">
+										<c:choose>
+											<c:when test="${boardVo.board_use == 'Y'}">사용</c:when>
+											<c:when test="${boardVo.board_use == 'N'}">미사용</c:when>
+										</c:choose>
 											<option value="Y">Y</option>
 											<option value="N">N</option>
 										</select>
+										 <input type="hidden" class="form-control" id="board_use" name="board_use"
+										value="${vo.board_use}"> 
 											<button type="submit" class="btn btn-default">수정</button>
 										<br>
 										</form>

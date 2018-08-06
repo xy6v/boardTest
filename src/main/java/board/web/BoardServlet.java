@@ -26,6 +26,7 @@ public class BoardServlet extends HttpServlet {
 	// 학생 정보 수정 화면
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
 		BoardServiceInf boardService = new BoardService();
 		String name = request.getParameter("board_name");
 		System.out.println(name);

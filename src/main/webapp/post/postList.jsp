@@ -44,7 +44,7 @@
 	<%@ include file="/common/top.jsp"%>
 	
 	<form id="frm" action="/postDetail" method="get">
-		<input type="hidden" name="post_code" id="post_code">
+		<input type="hidden" name="post_code" id="post_code" value="${postVo.post_code }">
 		<input type="hidden" name="post_parent" id="post_parent">
 		<input type="hidden" name="board_code" id="board_code">
 		<input type="hidden" name="std_id" id="std_id">
@@ -63,6 +63,7 @@
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr >
+										<td>게시판 코드</td>
 										<td>게시글 코드</td>
 										<td>작성자</td>
 										<td>제목</td>
@@ -71,17 +72,30 @@
 								</thead>
 								 <tbody>
 									<c:forEach items="${pageList}" var="vo">
+									<c:choose>
+									<c:when test="${vo.post_use=='Y'}">
 										<tr data-id="${vo.post_code}">
 										<input type="hidden" id="post" name="post_code" value="${vo.post_code}"/>
 										<input type="hidden" id="board" name="board_code" value="${vo.board_code}"/>
-				
-										<%-- <input type="hidden" id="board" name="board_code" value="${postVo.post_parent}"/> --%>
+											<td>${vo.board_code}</td>
 											<td>${vo.post_code}</td>
 											<td>${studentVo.std_id}</td>
 											<td>${vo.post_name}</td>
 											<td><fmt:formatDate value="${vo.post_dt}"
 													pattern="yyyy-MM-dd" /></td>
 										</tr>
+										</c:when>
+										<c:when test="${vo.post_use=='N'}">
+										<tr style="pointer-events:none;">
+										<td>${vo.board_code}</td>
+										<td>${vo.post_code}</td>
+										<td>${studentVo.std_id}</td>
+										<td>삭제된게시물입니다</td>
+										<td><fmt:formatDate value="${vo.post_dt}"
+													pattern="yyyy-MM-dd" /></td>
+										</tr>
+										</c:when>
+										</c:choose>
 									</c:forEach>
 								</tbody> 
 							</table>
@@ -92,7 +106,6 @@
 							<ul class="pagination">
 								<%=request.getAttribute("pageNavi")%>
 							</ul>
-							
 						</div>
 					</div>
 				</div>

@@ -9,7 +9,7 @@
 		(select a.*, ROWNUM rn
 		FROM
 		(select POST_CODE,lpad('->',(level-1)*2,'-')||POST_NAME as
-		POST_NAME,board_code,std_id,post_content,post_dt,post_parent,post_gcode
+		POST_NAME,board_code,std_id,post_content,post_dt,post_parent,post_gcode,post_use
 		from post
 		where post.BOARD_CODE = #{board_code}
 		start with POST_PARENT is null
@@ -46,14 +46,15 @@
 		<!-- INSERT BOARD INTO board_code=#{board_code}, board_name=#{board_name}, 
 			board_use=#{board_use} -->
 		INSERT INTO post
-		(post_parent,board_code,post_code,post_name,post_content,post_dt) values (parent_no.nextval,#{board_code},post_no.nextval,#{post_name},#{post_content},sysdate)
+		(std_id,post_use,board_code,post_code,post_name,post_content,post_dt) values ('brown','Y',#{board_code},post_no.nextval,#{post_name},#{post_content},sysdate)
 	</insert>
 	
 		<insert id="postRp" parameterType="postVo">
-		INSERT INTO post
-		(board_code,post_code,post_parent,post_name,post_content,post_dt) values (#{board_code},post_no.nextval,#{post_parent},#{post_name},#{post_content},sysdate)
-	</insert>
-	<delete id="postDelete" parameterType="int">
-	  delete from post where post_code=#{post_code}
-	</delete>
+			INSERT INTO post
+		(post_use,post_code,board_code,post_parent,post_name,post_content,post_dt) values ('Y',post_no.nextval,#{board_code},#{post_parent},#{post_name},#{post_content},sysdate) 
+		</insert>
+	<update id="postDelete" parameterType="int">
+		update post 
+		set post_name ='삭제된내용입니다',post_use='N',post_content='삭제된내용입니다' where post_code=#{post_code}
+	</update>
 </mapper>     

@@ -23,10 +23,12 @@
       <!-- INSERT BOARD INTO board_code=#{board_code}, board_name=#{board_name}, 
          board_use=#{board_use} -->
       INSERT INTO comments
-      (post_parent,post_code,comments_code,comments_dt,comments_content) values (parent_no.nextval,#{post_code},comments_no.nextval,sysdate,#{comments_content})
+      (post_code,comments_code,comments_dt,comments_content) values (#{post_code},comments_no.nextval,sysdate,#{comments_content})
    </insert>
    
    <delete id="deleteComments" parameterType="int">
-     delete from comments where comments_code=#{comments_code}
+   	update comments set comments_content='삭 제 된 댓 글 입 니 다' where comments_code =#{comments_code}
+   	
+ <!--     delete from comments where comments_code=#{comments_code} -->
    </delete>
 </mapper>     

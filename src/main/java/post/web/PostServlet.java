@@ -27,7 +27,7 @@ public class PostServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// 비교하기 해서 1번일 경우자유게시판, 2번일 경우 qnA 정보로 맵핑하기
-
+		request.setCharacterEncoding("utf-8");
 		String pageStr = request.getParameter("page");
 		String pageSizeStr = request.getParameter("pageSize");
 		// 게시판에 맞는 게시글 뜨게

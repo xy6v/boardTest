@@ -78,9 +78,27 @@
 							<button type="submit" class="btn btn-default">게시글 수정</button>
 						</div>
 					</div>
+					<div class="form-group col-md-4">
+								<label for="attachment">첨부파일 : </label>
+								<c:choose>
+									<c:when test="${uploadList == null }">
+										<input type="text" value="첨부파일 없음" readonly="readonly">
+									</c:when>
+								<c:otherwise>
+								<c:forEach items="${uploadList }" var="uploadVo">
+								<li><a href="/fileDown?upload=${uploadVo.upload}">${uploadVo.uploadname}" 
+								<i class="fa fa-download" aria-hidden="true"></i>
+								</a></li> 
+								</c:forEach>
+								</c:otherwise>
+								</c:choose>
+
+							</div>
+					
+					
 				</form>
-				<form id="delete" class="form-horizontal" role="form"
-					action="/postDelete?post_code=${post_code}" method="get">
+				<%-- <form id="delete" class="form-horizontal" role="form"
+					action="/postDelete?post_code=${post_code}&board_code=${board_code}" method="get">
 					<input type="hidden" class="form-control" id="post_code"
 						name="post_code" value="${postVo.post_code}" /> <input
 						type="hidden" class="form-control" id="board_code"
@@ -89,23 +107,29 @@
 						<button id="deleteBtn" type="submit" class="btn btn-default">게시글
 							삭제</button>
 					</div>
+				</form> --%>
+					<form id="comment" class="form-horizontal" role="form"
+					action="/postDelete" method="get">
+					<input type="hidden" class="form-control" id="post_code"
+						name="post_code" value="${postVo.post_code}" /> <input
+						type="hidden" class="form-control" id="board_code"
+						name="board_code" value="${postVo.board_code}" />
+					<div class="control-label">
+						<button id="commentBtn" type="submit" class="btn btn-default">게시글 삭제</button>
+					</div>
 				</form>
+				
 
 				<%-- 	<form id="delete" class="form-horizontal" role="form"
 										action="/postNew?post_parent=${post_code}" method="get"> --%>
 										
-					<form id="delete" class="form-horizontal" role="form"
-					action="/post/postNew.jsp?post_parent=${post_code}" method="get">
-										
-					<input type="hidden" class="form-control" id="post_code"
-						name="post_code" value="${postVo.post_code}" /> 
-						<input type="hidden" class="form-control" id="post_parent"
-						name="post_parent" value="${postVo.post_parent}" />
-						<input
-						type="hidden" class="form-control" id="board_code"
-						name="board_code" value="${postVo.board_code}" />
+					<form id="comment" class="form-horizontal" role="form"
+					action="/post/postRp.jsp">
 					<div class="control-label">
-						<button id="deleteBtn" type="submit" class="btn btn-default">답글쓰기</button>
+						<input type="hidden" class="form-control" id="board_code"
+						name="board_code" value="${postVo.board_code}" />
+						<input type="hidden" name="post_parent" value="${postVo.post_code}"/>
+						<button id="commentBtn" type="submit" class="btn btn-default">답글쓰기</button>
 					</div>
 				</form>
 
@@ -143,14 +167,12 @@
 
 				<form id="insertComment" class="form-horizontal" role="form"
 					action="/commentsList" method="post">
+					<input type="hidden" id="board" name="board_code"value="${postVo.board_code}">
+					 <input type="hidden" name="post_content" value="${postVo.post_content}"> 
+						<input type="hidden" name="post_name" value="${postVo.post_name}">
+					<input type="hidden" id="post_code" name="post_code" value="${postVo.post_code}">
 					<label for="comments_content" class="col-sm-2 control-label">댓글작성:</label>
-					<input type="hidden" id="board" name="board_code"
-						value="${postVo.board_code}" /> <input type="hidden"
-						name="post_content" value="${postVo.post_content}"> <input
-						type="hidden" name="post_name" value="${postVo.post_name}">
-					<input type="hidden" id="post_code" name="post_code"
-						value="${postVo.post_code}" /> <input type="text"
-						name="comments_content" />
+					 <input type="text"name="comments_content" />
 					<button type="submit" class="btn btn-default">저장</button>
 					
 			</form>

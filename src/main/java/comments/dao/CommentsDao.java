@@ -35,7 +35,7 @@ public class CommentsDao implements CommentsDaoInf {
 	@Override
 	public int deleteComments(int comments_code) {
 		SqlSession session = sqlMapSessionFactory.openSession();
-		int deleteCnt = session.delete("comments.deleteComments", comments_code);
+		int deleteCnt = session.update("comments.deleteComments", comments_code);
 		session.commit();
 		session.close();
 		return deleteCnt;

@@ -11,7 +11,7 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<title>Jsp</title>
+<title>새글쓰기</title>
 
 <script src="/js/jquery-1.12.4.js"></script>
 <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -20,17 +20,7 @@
 <!-- Custom styles for this template -->
 <link href="/bootstrap/css/dashboard.css" rel="stylesheet">
 <link href="/bootstrap/css/blog.css" rel="stylesheet">
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script>
-	$(function() {
-		$("#updateBtn").on("click", function() {
-			console.log($("#frm").serialize());
-			$("#frm").submit();
-
-		});
-	});
-</script>
-
+<script src="/SE2/js/HuskyEZCreator.js"></script>
 
 <script type="text/javascript">
 	var oEditors = []; 
@@ -39,7 +29,7 @@
 		// Editor Setting
 		nhn.husky.EZCreator.createInIFrame({
 			oAppRef : oEditors, // 전역변수 명과 동일해야 함.
-			elPlaceHolder : "smarteditor", // 에디터가 그려질 textarea ID 값과 동일 해야 함.
+			elPlaceHolder : "post_content", // 에디터가 그려질 textarea ID 값과 동일 해야 함.
 			sSkinURI : "/SE2/SmartEditor2Skin.html", // Editor HTML
 			fCreator : "createSEditor2", // SE2BasicCreator.js 메소드명이니 변경 금지 X
 			htParams : {
@@ -51,63 +41,69 @@
 				bUseModeChanger : true,
 			}
 		});
-	
+		$("#save").click(function() {
+			// id가 smarteditor인 textarea에 에디터에서 대입
+			oEditors.getById["post_content"].exec("UPDATE_CONTENTS_FIELD", []);
+			$("#frm").submit();
+		});
 	});
 </script>
+
 </head>
 
 <body>
+
+	<!-- top -->
 	<%@ include file="/common/top.jsp"%>
+
 	<div class="container-fluid">
 		<div class="row">
 
+			<!-- left -->
 			<%@ include file="/common/left.jsp"%>
 
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-			
-				<form id="frm" action="/postUpdate" class="form-horizontal"
-					role="form" method="post" enctype="multipart/form-data">
 
+				<div class="blog-header">
+					<h3 class="blog-title">글쓰기 페이지</h3>
+				</div>
 
-					<div class="form-group">
-						<label for="code" class="col-sm-2 control-label">게시글코드</label>
-						<div class="col-sm-10">
-							<label class="control-label">${postVo.post_code}</label>
-							<input type="hidden" class="form-control" id="post_code" name="post_code"
-								value="${postVo.post_code}" >
-						</div>
-					</div>
+				<div class="row">
+					<div class="col-sm-8 blog-main">
+						<div class="blog-post">
+							<form id="frm" action="/postRplist?board_code=${param.board_code}" class="form-horizontal"
+								 method="post" enctype="multipart/form-data">
+								<h2 class="blog-post-title">답글을  쓰겠다구요~~?</h2>
+								${post_parent}:${param.post_parent}
+								<hr>
+<%-- 								<input type="hidden" class="form-control" name="board_code" value="${param.board_code}" > --%>
+								<input type="hidden" id="post_parent" name="post_parent" value="${param.post_parent}" >  
+								<input type="text" id="board_code" name="board_code" value="${param.board_code}" > 
+								글쓴이 <label class="control-label">${studentVo.std_id}</label> <br>
+									 제목 <input type="text" name="post_name" /><br>
+								<!-- 내용 <input type="text" name="post_content"/><br> -->
 
-					<div class="form-group">
-						<label for="name" class="col-sm-2 control-label">게시글 이름</label>
-						<div class="col-sm-6">
-							<input type="text" class="form-control" id="post_name" name="post_name"
-								value="${postVo.post_name}" placeholder="게시글 이름">
-						</div>
-					</div>
-					
-					<%-- <div class="form-group">
-						<label for="content" class="col-sm-2 control-label">내용</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="post_content" name="post_content"
-								value="${postVo.post_content}" placeholder="게시글 내용">
-						</div>
-					</div> --%>
-					
-					<div class="form-group marbtm-30">
+								<!-- contents -->
+								<div class="form-group marbtm-30">
 									<label for="smarteditor">내용</label>
-									<textarea name="smarteditor" id="smarteditor" rows="10" 
-									<%-- value="${postVo.post_content}" --%> cols="100" style="width: 100%; height: 412px;">${postVo.post_content}</textarea>
-					</div>
-					
-					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-10">
-							<button id="updateBtn" type="button" class="btn btn-default">수정</button>
+									<textarea name="post_content" id="post_content" rows="10"
+										cols="100" style="width: 100%; height: 412px;"></textarea>
+								</div>
+								
+								<!-- 첨부파일 -->
+								<input type="file" name="uploadName" multiple="multiple">
+			
+								<input type="button" id="save" value="저장"><br>
+								</form>
+								<hr>
 						</div>
 					</div>
-				</form>
+					<!-- /.blog-main -->
+				</div>
+
 			</div>
 		</div>
 	</div>
 </body>
 </html>
+

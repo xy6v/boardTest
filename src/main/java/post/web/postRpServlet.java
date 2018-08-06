@@ -3,7 +3,6 @@ package post.web;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -12,43 +11,47 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import post.model.PostVo;
 import post.service.PostService;
 import post.service.PostServiceInf;
 import upload.model.UploadVo;
 import upload.service.UploadService;
 import upload.service.UploadServiceInf;
-import board.model.BoardVo;
-import board.service.BoardService;
-import board.service.BoardServiceInf;
 
-@WebServlet("/postNew")
+/**
+ * Servlet implementation class postRpServlet
+ */
+@WebServlet("/postRplist")
 @MultipartConfig(maxFileSize = 1024 * 1000 * 3, maxRequestSize = 1024 * 1000 * 15)
-public class PostNewServlet extends HttpServlet {
+public class postRpServlet extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		
-	}
-
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	private Logger logger = LoggerFactory.getLogger(postRpServlet.class);
+	
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		PostServiceInf postService = new PostService();
 		UploadServiceInf uploadService = new UploadService();
 		int board_code = Integer.parseInt(request.getParameter("board_code"));
-		System.out.println("보두"+board_code);
 		
+		int post_parent =Integer.parseInt(request.getParameter("post_parent"));
+		logger.debug("{}","request.getParameter : "+request.getParameter("board_code"));
+		System.out.println("보드코드:ㅣㅣㅣㅣ"+board_code);
+		/*int post_parent = Integer.parseInt(request.getParameter("post_parent"));*/
+	
 		/*String post_parent = request.getParameter("post_parent");*/
 		String std_id= (String) request.getSession().getAttribute("std_id");
 		String name = request.getParameter("post_name");
-		String content = request.getParameter("smarteditor");
+		String content = request.getParameter("post_content");
 		
-		
-		System.out.println("ssss"+content);
-
+	/*	System.out.println("1이런시발2좆됫구요:"+post_parent);*/
+		System.out.println("2이런시발:"+post_parent);
 	/*	String std_id= request.getParameter("std_id");
 		*/
 		System.out.println(std_id);
@@ -61,13 +64,11 @@ public class PostNewServlet extends HttpServlet {
 		postVo.setPost_name(name);
 		postVo.setPost_content(content);
 		postVo.setBoard_code(board_code);
+		postVo.setPost_parent(post_parent);
+
+		int insertCnt = postService.postRp(postVo);
 		
-		/* boardVo.setBoard_code(code); */
-		// ***When***//*
-		
-		int insertCnt = postService.postNew(postVo);
-		System.out.println(insertCnt);
-		
+	
 		Collection<Part> file = request.getParts();
 		
 		for(Part p : file){
@@ -91,20 +92,12 @@ public class PostNewServlet extends HttpServlet {
 					
 				}
 			}
-					
-		}
-
-		/*
-		 * HttpSession session = request.getSession();
-		 * session.setAttribute("postList", postList);
-		 */
-		/*
-		 * request.getRequestDispatcher("/post/postNew.jsp").forward(request,
-		 * response);
-		 */
-
-		response.sendRedirect("/postList?board_code=" + board_code);
-		
+		System.out.println(insertCnt);
+		/*response.sendRedirect("/postList?page=1&pageSize=10&board_code=" + board_code);*/
+		                        
 	}
-
+		response.sendRedirect("/postList?board_code=" + board_code);
+	}
 }
+
+

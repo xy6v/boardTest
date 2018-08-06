@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="upload">
+
+<select resultType="uploadVo" parameterType="Integer" id="getUploadPost"> SELECT * FROM UPLOAD WHERE post_code = #{post_code} </select>
+
+<delete parameterType="Integer" id="deleteUpload"> DELETE FROM UPLOAD WHERE post_code = #{post_code} </delete>
+
+<select resultType="uploadVo" parameterType="Integer" id="getUpload"> SELECT * FROM UPLOAD WHERE upload_code = #{upload_code} </select>
+
+<insert id="insertUpload" parameterType="uploadVo">
+insert into upload
+(post_code,upload_code,upload,uploadpath,uploadname) values ((select max(post_code)from post),upload_no.nextval,#{upload},#{uploadpath},#{uploadname})
+ </insert>
+</mapper>

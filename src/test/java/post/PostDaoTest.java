@@ -12,6 +12,9 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import comments.dao.CommentsDao;
+import comments.dao.CommentsDaoInf;
+import comments.model.CommentsVo;
 import board.model.BoardVo;
 import post.dao.PostDao;
 import post.dao.PostDaoInf;
@@ -46,7 +49,7 @@ public class PostDaoTest {
 		//studentpage.get(studentDao);
 		
 		/*** Then ***/
-		assertEquals(3, pageList.size());
+		assertEquals(10, pageList.size());
 	}
 	@Test
 	public void getPostTotCntTest(){
@@ -56,7 +59,7 @@ public class PostDaoTest {
 		int cnt = postDao.getPostTotCnt();
 
 		/***Then***/
-		assertEquals(6, cnt);
+		assertEquals(176, cnt);
 	}
 	
 	@Test
@@ -73,32 +76,72 @@ public class PostDaoTest {
 		System.out.println("왜안되니"+postvo.getPost_name()+postvo.getPost_content());
 
 		/*** Then ***/
-		assertEquals("자유게시판", postvo.getPost_name());
+		assertEquals("수정이 됬습니다!!!!!fhhh", postvo.getPost_name());
 
-		
-		
-		
-		/*int board_code = 1;
-		List<PostVo> postList = postDao.getPost(board_code);
-		
-		*//*** When ***//*
-		for (PostVo vo1 : postList)
-			System.out.println(vo1.getBoard_code() + "\t" + vo1.getPost_name());
-
-		*//*** Then ***//*
-		assertEquals(2, postList.size());*/
 		
 	}
 	
 	@Test
 	public void postDeleteTest(){
-		int post_code=14;
+		int post_code=188;
 		
-		PostServiceInf postService = new PostService();
-		int result = postService.postDelete(post_code);
+		PostDaoInf dao = new PostDao();
+		PostVo vo =  new PostVo();
+		vo.setPost_use("N");
+		int postvo= dao.postDelete(post_code);
+		assertEquals(1,postvo);
 		
-		assertEquals(1,result);
 	}
+	
+	@Test
+	public void postUpdateTest(){
+		/***Given***/
+		PostDaoInf dao = new PostDao();
+		
+		PostVo postVo = new PostVo();
+		postVo.setPost_code(189);
+		postVo.setPost_name("test");
+		postVo.setPost_use("Y");
+		postVo.setPost_content("gmdgmdgmdgmd");
+		
+		int result = dao.postUpdate(postVo);
+		/***When***/
+		
+		/***Then***/
+		assertEquals(1, result);
+	}
+	
+	@Test
+	public void getContentTest(){
+		/***Given***/
+		int cont_num = 1;
+		CommentsDaoInf dao = new CommentsDao();
+		
+		/***When***/
+		List<CommentsVo> content = dao.getComments(cont_num);
+		
+		/***Then***/
+		assertEquals(1, cont_num);
+	}
+	
+	/*@Test
+	public void addCommentsTest(){
+		*//***Given***//*
+		
+		CommentsDaoInf dao = new CommentsDao();
+		
+		CommentsVo comment = new CommentsVo();
+		comment.setPost_code(151);
+		comment.setComments_content("dldodododd");
+		comment.setStd_id("brown");
+		
+		*//***When***//*
+		int result = dao.insertComments(comment);
+		*//***Then***//*
+		assertEquals(1, result);
+	}*/
+	
+	
 	
 	
 

@@ -69,7 +69,7 @@ public class BoardServiceTest {
 					+ "\t" + vo.getBoard_use());
 
 		/*** Then ***/
-		assertEquals(6, boardList.size());
+		assertEquals(20, boardList.size());
 
 	}
 

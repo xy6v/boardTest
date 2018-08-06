@@ -27,6 +27,7 @@ public class PostUpdateServlet extends HttpServlet {
    
    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		int post_code = Integer.parseInt(request.getParameter("post_code"));
 
 		// 게시글 조회
@@ -48,7 +49,7 @@ public class PostUpdateServlet extends HttpServlet {
 		int post_code = Integer.parseInt(request.getParameter("post_code"));
 		System.out.println(post_code);
 		String post_name = request.getParameter("post_name");
-		String post_content= request.getParameter("post_content");
+		String post_content= request.getParameter("smarteditor");
 
 		// 정보 조회 (service)
 		PostServiceInf postService = new PostService();
