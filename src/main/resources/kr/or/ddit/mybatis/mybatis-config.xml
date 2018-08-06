@@ -12,7 +12,6 @@
 	<typeAlias type="comments.model.CommentsVo" alias="commentsVo"/>
 	<typeAlias type="upload.model.UploadVo" alias="uploadVo"/>
 </typeAliases>
-
   <environments default="development">
     <environment id="development">
       <transactionManager type="JDBC"/>
